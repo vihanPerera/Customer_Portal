@@ -1,0 +1,15 @@
+/* CustomScrollbar.css */
+.simplebar-scrollbar::before {
+    height: 100%; /* Adjust this value to your preference */
+}
+
+.simplebar-track.simplebar-vertical {
+    width: 12px; /* Adjust the width of the scrollbar (optional) */
+}
+
+/* CustomScrollbar.css */
+.simplebar-scrollbar::before {
+    /* Color of the scrollbar thumb */
+    background-color: #7C7B84; /* Example color */
+}
+
