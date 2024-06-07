@@ -1,22 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { IoNotificationsOutline } from "react-icons/io5";
+import { IoSettingsOutline } from "react-icons/io5";
 import FlexBetween from "../components/FlexBetween";
-import { AppBar, Toolbar, IconButton, Box } from "@mui/material";
+import { AppBar, Toolbar, IconButton, Box, Tooltip } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { styled, alpha } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
-import MenuIcon from "@mui/icons-material/Menu";
+import { TbSquareArrowRightFilled } from "react-icons/tb";
 import Header from "./Header";
-import LogoutIcon from "@mui/icons-material/Logout";
 
 function Navbar({ sidebarWidth, setSidebarWidth, activeItemName }) {
   const Search = styled("div")(({ theme }) => ({
     position: "relative",
-    borderRadius: "50px",
-    backgroundColor: alpha(theme.palette.neutral.main, 0.15),
-    "&:hover": {
-      backgroundColor: alpha(theme.palette.neutral.main, 0.25),
-    },
+    borderRadius: "4px",
+    border: '1px solid #C6C6C6',
     marginLeft: 0,
     width: "100%",
     [theme.breakpoints.up("sm")]: {
@@ -43,15 +40,18 @@ function Navbar({ sidebarWidth, setSidebarWidth, activeItemName }) {
       transition: theme.transitions.create("width"),
       width: "100%",
       [theme.breakpoints.up("sm")]: {
-        width: "18ch",
+        width: "40ch",
         "&:focus": {
-          width: "30ch",
+          width: "60ch",
         },
       },
     },
   }));
 
+  const [isToggled, setIsToggled] = useState(true);
+
   const toggleSidebarWidth = () => {
+    setIsToggled(!isToggled);
     setSidebarWidth(sidebarWidth === "240px" ? "80px" : "240px");
   };
 
@@ -73,7 +73,14 @@ function Navbar({ sidebarWidth, setSidebarWidth, activeItemName }) {
           sx={{ marginLeft: sidebarWidth }}
         >
           <IconButton onClick={toggleSidebarWidth} sx={{ marginLeft: "-20px" }}>
-            <MenuIcon />
+          <TbSquareArrowRightFilled 
+            style={{
+              fontSize: '24px',
+              transform: isToggled ? 'scaleX(-1)' : 'scaleX(1)',
+              transition: 'transform 0.3s ease-in-out',
+              color: '#171819'
+            }} 
+          />
           </IconButton>
           <Header title={activeItemName} />
         </Box>
@@ -82,17 +89,23 @@ function Navbar({ sidebarWidth, setSidebarWidth, activeItemName }) {
         <FlexBetween gap="1rem">
           <Search>
             <SearchIconWrapper>
-              <SearchIcon />
+              <SearchIcon sx={{color: '#BDBDBD'}}/>
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
             />
           </Search>
-
-          <IconButton>
-            <IoNotificationsOutline size={22} />
-          </IconButton>
+          <Tooltip title={'Setting'} arrow>
+            <IconButton>
+              <IoSettingsOutline size={23} />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title={'Notification'} arrow>
+            <IconButton>
+              <IoNotificationsOutline size={23} />
+            </IconButton>
+          </Tooltip>
         </FlexBetween>
       </Toolbar>
     </AppBar>
